@@ -3,6 +3,7 @@ package connpass
 
 import (
         "encoding/json"
+        "fmt"
         "net/http"
         "net/url"
 )
@@ -52,9 +53,35 @@ func NewClient() *client {
         return &client{}
 }
 
-func (c *client) Search(keyword string) ([]Events, error) {
+func (c *client) Search(m map[string]interface{}) ([]Events, error) {
         p := url.Values{}
-        p.Set("keyword", keyword)
+
+        for k, v := range m {
+                switch k {
+                case "event_id":
+                        p.Set("event_id", fmt.Sprint(v))
+                case "keyword":
+                        p.Set("keyword", fmt.Sprint(v))
+                case "keyword_or":
+                        p.Set("keyword_or", fmt.Sprint(v))
+                case "ym":
+                        p.Set("ym", fmt.Sprint(v))
+                case "ymd":
+                        p.Set("ymd", fmt.Sprint(v))
+                case "nickname":
+                        p.Set("nickname", fmt.Sprint(v))
+                case "owner_nickname":
+                        p.Set("owner_nickname", fmt.Sprint(v))
+                case "series_id":
+                        p.Set("series_id", fmt.Sprint(v))
+                case "start":
+                        p.Set("start", fmt.Sprint(v))
+                case "order":
+                        p.Set("order", fmt.Sprint(v))
+                case "count":
+                        p.Set("count", fmt.Sprint(v))
+                }
+        }
 
         res, err := http.Get(EndPoint + "?" + p.Encode()) 
         if err != nil {
