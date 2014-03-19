@@ -24,7 +24,7 @@ Interface to connpass API written by golang.
 
     go get github.com/ramtiga/go-connpass
 
-## Licencse:
+## License:
 
 MIT
 
